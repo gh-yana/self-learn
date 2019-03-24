@@ -22,10 +22,6 @@
 1. Jupyter Notebookで開いて、
 2. Cellをポチポチ押していく。。。
 
-## Installation
-
-    $ git clone https://github.com/gh-yana/yana
-
 ## Anything Else
 
 勉強中につき、今は単なるファイル置き場になってます。。
@@ -37,4 +33,5 @@
 ## License
 
 [MIT](https://mit-license.org/)
+
 Copyright © 2019 Yana <i.yanapon@gmail.com>
