@@ -1,0 +1,645 @@
+[
+    {
+        "id": "65321e8e.196f7",
+        "type": "comment",
+        "z": "8fbf1ca8.1f191",
+        "name": "K5-PaaSアクセストークン取得(20分毎に更新)",
+        "info": "",
+        "x": 196.00001525878906,
+        "y": 33.79362773895264,
+        "wires": []
+    },
+    {
+        "id": "d2a76137.9b446",
+        "type": "inject",
+        "z": "8fbf1ca8.1f191",
+        "name": "Token-Get",
+        "topic": "",
+        "payload": "",
+        "payloadType": "date",
+        "repeat": "1200",
+        "crontab": "",
+        "once": true,
+        "onceDelay": "3",
+        "x": 112.0000228881836,
+        "y": 93.79363250732422,
+        "wires": [
+            [
+                "c007e47c.334698"
+            ]
+        ]
+    },
+    {
+        "id": "c007e47c.334698",
+        "type": "function",
+        "z": "8fbf1ca8.1f191",
+        "name": "API-para-set",
+        "func": "//機能名URI\n//トークン取得\nmsg.url = 'https://auth-api.jp-east-1.paas.cloud.global.fujitsu.com/API/oauth2/token';\n//msg.method= \"POST\";\n\n//リクエストヘッダー\nmsg.headers ={\n    \"Content-Type\" : \"application/x-www-form-urlencoded\" ,\n    \"charset\" : \"UTF-8\"\n};\n//リクエストボディ\nmsg.payload ={\n    \"grant_type\" : \"client_credentials\" ,\n    \"scope\" : \"service_contract\" ,\n    \"client_id\" : \"pabi\" ,\n    \"client_secret\":\"Sorisuipassword8698-01\"\n};\nreturn msg;",
+        "outputs": "1",
+        "noerr": 0,
+        "x": 314.41672134399414,
+        "y": 99.59917831420898,
+        "wires": [
+            [
+                "88036935.bfc6c8"
+            ]
+        ]
+    },
+    {
+        "id": "88036935.bfc6c8",
+        "type": "http request",
+        "z": "8fbf1ca8.1f191",
+        "name": "API-exec",
+        "method": "POST",
+        "ret": "txt",
+        "url": "",
+        "tls": "",
+        "x": 483.1111259460449,
+        "y": 100.01584911346436,
+        "wires": [
+            [
+                "9c561da9.09136"
+            ]
+        ]
+    },
+    {
+        "id": "9c561da9.09136",
+        "type": "json",
+        "z": "8fbf1ca8.1f191",
+        "name": "",
+        "property": "payload",
+        "action": "",
+        "pretty": true,
+        "x": 308.1111946105957,
+        "y": 161.84127140045166,
+        "wires": [
+            [
+                "601b08e9.3cd1e8"
+            ]
+        ]
+    },
+    {
+        "id": "601b08e9.3cd1e8",
+        "type": "function",
+        "z": "8fbf1ca8.1f191",
+        "name": "global_set",
+        "func": "context.global.k5token = msg.payload.access_token;\nmsg.k5token = context.global.k5token;\nreturn msg;\n",
+        "outputs": 1,
+        "noerr": 0,
+        "x": 468.9999885559082,
+        "y": 158.79366207122803,
+        "wires": [
+            [
+                "43965780.72e1a8"
+            ]
+        ]
+    },
+    {
+        "id": "43965780.72e1a8",
+        "type": "debug",
+        "z": "8fbf1ca8.1f191",
+        "name": "",
+        "active": true,
+        "console": "false",
+        "complete": "k5token",
+        "x": 662.4722290039062,
+        "y": 133.96031951904297,
+        "wires": []
+    },
+    {
+        "id": "c1125bcf.aaf088",
+        "type": "function",
+        "z": "8fbf1ca8.1f191",
+        "name": "API-para-set",
+        "func": "//機能名URI\n//Zinrai文章分類\nmsg.url = 'https://zinrai-pf.jp-east-1.paas.cloud.global.fujitsu.com/NaturalLanguageProcessing/v1/classification/models/uf63Bzia/actions/analyze';\n\n//リクエストヘッダー\nmsg.headers ={\n    'X-Service-Code':'FJAI000012-00404' ,\n    'Content-Type':'application/json',\n    'charset':'utf-8',\n    'X-Access-Token':context.global.k5token\n};\n\n//URLパラメタ\n//msg.topic = {\n//    'maxResults' : '1'\n//};\n\n//リクエストボディ\nmsg.payload ={\n//    'sentence' : 'スマホが欲しい'\n    'sentence': msg.testmsg1\n};\nreturn msg;\n",
+        "outputs": "1",
+        "noerr": 0,
+        "x": 498.09525171915675,
+        "y": 1099.7024211883545,
+        "wires": [
+            [
+                "3f215536.c3634a"
+            ]
+        ]
+    },
+    {
+        "id": "3f215536.c3634a",
+        "type": "http request",
+        "z": "8fbf1ca8.1f191",
+        "name": "API-exec",
+        "method": "POST",
+        "ret": "obj",
+        "url": "",
+        "tls": "",
+        "x": 672.9762827555337,
+        "y": 1094.6429243087769,
+        "wires": [
+            [
+                "1d1bb796.9f7828"
+            ]
+        ]
+    },
+    {
+        "id": "2855e3ad.a4ce9c",
+        "type": "comment",
+        "z": "8fbf1ca8.1f191",
+        "name": "文章分類のAPIテスト(※任意文をペイロードに手入力)",
+        "info": "",
+        "x": 342.9286193847656,
+        "y": 988.3571605682373,
+        "wires": []
+    },
+    {
+        "id": "e3b5dbe9.9f17a8",
+        "type": "inject",
+        "z": "8fbf1ca8.1f191",
+        "name": "ぽち子",
+        "topic": "",
+        "payload": "料金が高い",
+        "payloadType": "str",
+        "repeat": "",
+        "crontab": "",
+        "once": false,
+        "onceDelay": 0.1,
+        "x": 217.7381362915039,
+        "y": 1043.7500343322754,
+        "wires": [
+            [
+                "425fb114.3d798"
+            ]
+        ]
+    },
+    {
+        "id": "425fb114.3d798",
+        "type": "change",
+        "z": "8fbf1ca8.1f191",
+        "name": "",
+        "rules": [
+            {
+                "t": "set",
+                "p": "testmsg1",
+                "pt": "msg",
+                "to": "payload",
+                "tot": "msg"
+            }
+        ],
+        "action": "",
+        "property": "",
+        "from": "",
+        "to": "",
+        "reg": false,
+        "x": 299.28573989868164,
+        "y": 1100.8334197998047,
+        "wires": [
+            [
+                "c1125bcf.aaf088"
+            ]
+        ]
+    },
+    {
+        "id": "7f6241bd.9195",
+        "type": "Slack Bot In",
+        "z": "8fbf1ca8.1f191",
+        "name": "slack-in",
+        "apiToken": "xoxb-352604638995-zfTnsEFfkEMEh8iXEGpFHE6Q",
+        "channel": "",
+        "x": 791.1668043136597,
+        "y": 1235.0001343488693,
+        "wires": [
+            []
+        ]
+    },
+    {
+        "id": "4713faf5.1515b4",
+        "type": "Slack Bot Out",
+        "z": "8fbf1ca8.1f191",
+        "name": "slack-out",
+        "apiToken": "xoxb-352604638995-zfTnsEFfkEMEh8iXEGpFHE6Q",
+        "channel": "",
+        "x": 922.8574409484863,
+        "y": 1236.0477484464645,
+        "wires": []
+    },
+    {
+        "id": "90d66f51.beb9f",
+        "type": "comment",
+        "z": "8fbf1ca8.1f191",
+        "name": "チャットもどき(slack bot)",
+        "info": "",
+        "x": 120.79372024536133,
+        "y": 235.17466354370117,
+        "wires": []
+    },
+    {
+        "id": "1d1bb796.9f7828",
+        "type": "debug",
+        "z": "8fbf1ca8.1f191",
+        "name": "",
+        "active": true,
+        "tosidebar": true,
+        "console": false,
+        "tostatus": false,
+        "complete": "false",
+        "x": 876.2857653299966,
+        "y": 1088.833408355713,
+        "wires": []
+    },
+    {
+        "id": "aacc604e.59307",
+        "type": "comment",
+        "z": "8fbf1ca8.1f191",
+        "name": "(temp)slackオウム返し",
+        "info": "",
+        "x": 838.3334846496582,
+        "y": 1188.333330154419,
+        "wires": []
+    },
+    {
+        "id": "2993b13d.5ee68e",
+        "type": "http request",
+        "z": "8fbf1ca8.1f191",
+        "name": "API-exec",
+        "method": "POST",
+        "ret": "obj",
+        "url": "",
+        "tls": "",
+        "x": 640.984130859375,
+        "y": 276.5555725097656,
+        "wires": [
+            [
+                "650a2d95.79aea4",
+                "4c977c78.108ef4"
+            ]
+        ]
+    },
+    {
+        "id": "b9791074.93883",
+        "type": "function",
+        "z": "8fbf1ca8.1f191",
+        "name": "API-para-set(NLC)",
+        "func": "//機能名URI\n//Zinrai文章分類\nmsg.url = 'https://zinrai-pf.jp-east-1.paas.cloud.global.fujitsu.com/NaturalLanguageProcessing/v1/classification/models/uf63Bzia/actions/analyze';\n\n//リクエストヘッダー\nmsg.headers ={\n    'X-Service-Code':'FJAI000012-00404' ,\n    'Content-Type':'application/json',\n    'charset':'utf-8',\n    'X-Access-Token':context.global.k5token\n};\n\n//URLパラメタ\n//msg.topic = {\n//    'maxResults' : '1'\n//};\n\n//リクエストボディ\nmsg.payload ={\n    'sentence': msg.msg001\n};\nreturn msg;\n",
+        "outputs": "1",
+        "noerr": 0,
+        "x": 464.72222900390625,
+        "y": 277.75804328918457,
+        "wires": [
+            [
+                "2993b13d.5ee68e"
+            ]
+        ]
+    },
+    {
+        "id": "a13b3264.027bb",
+        "type": "change",
+        "z": "8fbf1ca8.1f191",
+        "name": "msg001に代入",
+        "rules": [
+            {
+                "t": "set",
+                "p": "msg001",
+                "pt": "msg",
+                "to": "payload",
+                "tot": "msg"
+            }
+        ],
+        "action": "",
+        "property": "",
+        "from": "",
+        "to": "",
+        "reg": false,
+        "x": 264.6032295227051,
+        "y": 278.4126958847046,
+        "wires": [
+            [
+                "b9791074.93883"
+            ]
+        ]
+    },
+    {
+        "id": "e5e142d.2a164c",
+        "type": "Slack Bot In",
+        "z": "8fbf1ca8.1f191",
+        "name": "slack-read",
+        "apiToken": "xoxb-352604638995-zfTnsEFfkEMEh8iXEGpFHE6Q",
+        "channel": "",
+        "x": 92.46037673950195,
+        "y": 286.5079154968262,
+        "wires": [
+            [
+                "a13b3264.027bb"
+            ]
+        ]
+    },
+    {
+        "id": "650a2d95.79aea4",
+        "type": "function",
+        "z": "8fbf1ca8.1f191",
+        "name": "func",
+        "func": "context.global.ev1 = null;\nmsg.ev1 = context.global.ev1;\n//-------------------------------\ncontext.global.r0 = 0;\nmsg.r0 = msg.payload.result[0].score;\ncontext.global.r1 = 0;\nmsg.r1 = msg.payload.result[1].score;\ncontext.global.r2 = 0;\nmsg.r2 = msg.payload.result[2].score;\ncontext.global.r3 = 0;\nmsg.r3 = msg.payload.result[3].score;\ncontext.global.r4 = 0;\nmsg.r4 = msg.payload.result[4].score;\n//-------------------------------\ncontext.global.chk = 0;\nmsg.chk = 0;\nmsg.chk = Math.max( msg.r0 , msg.r1 , msg.r2 , msg.r3 , msg.r4 );\n//-------------------------------\nreturn msg;\n",
+        "outputs": 1,
+        "noerr": 0,
+        "x": 105.3731918334961,
+        "y": 430.5239429473877,
+        "wires": [
+            [
+                "eff22d09.5c4fd",
+                "6e8cda80.b37e54"
+            ]
+        ]
+    },
+    {
+        "id": "eff22d09.5c4fd",
+        "type": "switch",
+        "z": "8fbf1ca8.1f191",
+        "name": "eval",
+        "property": "chk",
+        "propertyType": "msg",
+        "rules": [
+            {
+                "t": "eq",
+                "v": "r0",
+                "vt": "msg"
+            },
+            {
+                "t": "eq",
+                "v": "r1",
+                "vt": "msg"
+            },
+            {
+                "t": "eq",
+                "v": "r2",
+                "vt": "msg"
+            },
+            {
+                "t": "eq",
+                "v": "r3",
+                "vt": "msg"
+            },
+            {
+                "t": "eq",
+                "v": "r4",
+                "vt": "msg"
+            }
+        ],
+        "checkall": "false",
+        "repair": false,
+        "outputs": 5,
+        "x": 258.22230529785156,
+        "y": 435.8573169708252,
+        "wires": [
+            [
+                "505f39eb.1bbc48"
+            ],
+            [
+                "55c35c9e.b883a4"
+            ],
+            [
+                "98a07622.86af58"
+            ],
+            [
+                "c5efa0b3.617cb"
+            ],
+            [
+                "8204255.6fcb1d8"
+            ]
+        ]
+    },
+    {
+        "id": "4a9b4b81.7b8164",
+        "type": "Slack Bot Out",
+        "z": "8fbf1ca8.1f191",
+        "name": "slack-out",
+        "apiToken": "xoxb-352604638995-zfTnsEFfkEMEh8iXEGpFHE6Q",
+        "channel": "#general",
+        "x": 671.9048385620117,
+        "y": 376.12707805633545,
+        "wires": []
+    },
+    {
+        "id": "505f39eb.1bbc48",
+        "type": "function",
+        "z": "8fbf1ca8.1f191",
+        "name": "label-0_挨拶",
+        "func": "msg.payload = \"こんにちは!(^^)! Zinrai自然文解析APIのbot-sampleです。携帯電話に関するご相談を承ります。何かお困りですか？\";\nreturn msg;",
+        "outputs": 1,
+        "noerr": 0,
+        "x": 466.3175468444824,
+        "y": 376.079496383667,
+        "wires": [
+            [
+                "4a9b4b81.7b8164",
+                "7386b18.0ab185"
+            ]
+        ]
+    },
+    {
+        "id": "55c35c9e.b883a4",
+        "type": "function",
+        "z": "8fbf1ca8.1f191",
+        "name": "label-1_契約変更",
+        "func": "msg.payload = \"ご契約内容の変更に関するご相談ですね(^^♪\";\nreturn msg;",
+        "outputs": 1,
+        "noerr": 0,
+        "x": 491.031831741333,
+        "y": 430.65080165863037,
+        "wires": [
+            [
+                "dc6cc9b4.04ef68",
+                "6c82d646.5f4408"
+            ]
+        ]
+    },
+    {
+        "id": "dc6cc9b4.04ef68",
+        "type": "Slack Bot Out",
+        "z": "8fbf1ca8.1f191",
+        "name": "slack-out",
+        "apiToken": "xoxb-352604638995-zfTnsEFfkEMEh8iXEGpFHE6Q",
+        "channel": "#general",
+        "x": 673.1270885467529,
+        "y": 434.9840965270996,
+        "wires": []
+    },
+    {
+        "id": "98a07622.86af58",
+        "type": "function",
+        "z": "8fbf1ca8.1f191",
+        "name": "label-2_契約",
+        "func": "msg.payload = \"新規ご契約ならびに他社からの乗り換えに関するご相談ですね(^^♪\";\nreturn msg;",
+        "outputs": 1,
+        "noerr": 0,
+        "x": 473.88894844055176,
+        "y": 486.3650960922241,
+        "wires": [
+            [
+                "4dc2e81.1c8a718",
+                "153360fd.fe9d6f"
+            ]
+        ]
+    },
+    {
+        "id": "4dc2e81.1c8a718",
+        "type": "Slack Bot Out",
+        "z": "8fbf1ca8.1f191",
+        "name": "slack-out",
+        "apiToken": "xoxb-352604638995-zfTnsEFfkEMEh8iXEGpFHE6Q",
+        "channel": "#general",
+        "x": 675.9842052459717,
+        "y": 490.69839096069336,
+        "wires": []
+    },
+    {
+        "id": "c5efa0b3.617cb",
+        "type": "function",
+        "z": "8fbf1ca8.1f191",
+        "name": "label-3_操作／設定",
+        "func": "msg.payload = \"操作方法や各種設定に関するご相談ですね(´・ω・`)\";\nreturn msg;",
+        "outputs": 1,
+        "noerr": 0,
+        "x": 489.12707138061523,
+        "y": 537.0793533325195,
+        "wires": [
+            [
+                "495f7911.8fcf98",
+                "620ab438.1471ec"
+            ]
+        ]
+    },
+    {
+        "id": "495f7911.8fcf98",
+        "type": "Slack Bot Out",
+        "z": "8fbf1ca8.1f191",
+        "name": "slack-out",
+        "apiToken": "xoxb-352604638995-zfTnsEFfkEMEh8iXEGpFHE6Q",
+        "channel": "#general",
+        "x": 672.8889865875244,
+        "y": 546.4126319885254,
+        "wires": []
+    },
+    {
+        "id": "7386b18.0ab185",
+        "type": "debug",
+        "z": "8fbf1ca8.1f191",
+        "name": "",
+        "active": false,
+        "tosidebar": true,
+        "console": false,
+        "tostatus": false,
+        "complete": "payload",
+        "x": 834.2540435791016,
+        "y": 379.28572940826416,
+        "wires": []
+    },
+    {
+        "id": "6c82d646.5f4408",
+        "type": "debug",
+        "z": "8fbf1ca8.1f191",
+        "name": "",
+        "active": false,
+        "tosidebar": true,
+        "console": false,
+        "tostatus": false,
+        "complete": "payload",
+        "x": 839.1270217895508,
+        "y": 434.84127044677734,
+        "wires": []
+    },
+    {
+        "id": "153360fd.fe9d6f",
+        "type": "debug",
+        "z": "8fbf1ca8.1f191",
+        "name": "",
+        "active": false,
+        "tosidebar": true,
+        "console": false,
+        "tostatus": false,
+        "complete": "payload",
+        "x": 841.9841995239258,
+        "y": 484.84127044677734,
+        "wires": []
+    },
+    {
+        "id": "620ab438.1471ec",
+        "type": "debug",
+        "z": "8fbf1ca8.1f191",
+        "name": "",
+        "active": false,
+        "tosidebar": true,
+        "console": false,
+        "tostatus": false,
+        "complete": "payload",
+        "x": 838.8889503479004,
+        "y": 540.5555725097656,
+        "wires": []
+    },
+    {
+        "id": "4c977c78.108ef4",
+        "type": "debug",
+        "z": "8fbf1ca8.1f191",
+        "name": "",
+        "active": false,
+        "tosidebar": true,
+        "console": false,
+        "tostatus": false,
+        "complete": "payload",
+        "x": 837.0318031311035,
+        "y": 275.0793352127075,
+        "wires": []
+    },
+    {
+        "id": "6e8cda80.b37e54",
+        "type": "debug",
+        "z": "8fbf1ca8.1f191",
+        "name": "",
+        "active": false,
+        "tosidebar": true,
+        "console": false,
+        "tostatus": false,
+        "complete": "chk",
+        "x": 189.88895634242465,
+        "y": 522.2221889495848,
+        "wires": []
+    },
+    {
+        "id": "8204255.6fcb1d8",
+        "type": "function",
+        "z": "8fbf1ca8.1f191",
+        "name": "label-4_解約",
+        "func": "msg.payload = \"もしかして、ご解約に関するご相談でしょうか...(*_*;\";\nreturn msg;",
+        "outputs": 1,
+        "noerr": 0,
+        "x": 467.2222480773926,
+        "y": 585.5555095672607,
+        "wires": [
+            [
+                "96b073e0.a3005",
+                "1d78eb08.b3b2c5"
+            ]
+        ]
+    },
+    {
+        "id": "96b073e0.a3005",
+        "type": "Slack Bot Out",
+        "z": "8fbf1ca8.1f191",
+        "name": "slack-out",
+        "apiToken": "xoxb-352604638995-zfTnsEFfkEMEh8iXEGpFHE6Q",
+        "channel": "#general",
+        "x": 670.9841632843018,
+        "y": 594.8887882232666,
+        "wires": []
+    },
+    {
+        "id": "1d78eb08.b3b2c5",
+        "type": "debug",
+        "z": "8fbf1ca8.1f191",
+        "name": "",
+        "active": false,
+        "tosidebar": true,
+        "console": false,
+        "tostatus": false,
+        "complete": "payload",
+        "x": 844.1270294189453,
+        "y": 594.7460374832153,
+        "wires": []
+    }
+]
