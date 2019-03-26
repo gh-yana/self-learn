@@ -14,8 +14,8 @@
 ## Requirement
 
 - Python3
-- Google Colab
-- Zinrai
+- Watson Studio
+- Zinrai Deep Learning
 
 ## Usage
 
