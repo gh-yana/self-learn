@@ -4,16 +4,16 @@
 
 ## Description
 
-各フレームワークで提供されているチュートリアルやサンプルデータを使った機械学習のサンプルを掲載しています。
-2019年9月時点で、Kerasでの画像分類(CNN)、Skt-learnでの重回帰、Kerasでの文章分類を掲載しています。
+各フレームワークで提供されているチュートリアルやサンプルデータを使った機械学習のサンプルソースを保管。
+画像分類、重回帰予測、文章分類など、自分で試したサンプルを掲載。
 
 ## Features
 
-今のところ無し・・・
+気が向いたら勉強する感じで。。。
 
 ## Requirement
 
-- Python3
+- Google Colaboratory
 - Watson Studio
 - Zinrai Deep Learning
 
