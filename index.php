@@ -8,7 +8,7 @@ if(isset($_GET["num"]) && !preg_match('/[^0-9]/', $_GET["num"])) {
     $param = htmlspecialchars($_GET["num"]);
     // メイン処理
     $arr["status"] = "yes";
-    $arr["user_msg"] = "WebAPIからのメッセージ（テスト）";
+    $arr["user_msg"] = "Message from WebAPI(yana_testing)";
     $arr["input_data"] = (string)((int)$param);
 } else {
     // paramの値が不適ならstatusをnoにしてプログラム終了
