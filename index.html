@@ -1,0 +1,43 @@
+<html>
+<head>
+<title>カレンダー</title>
+<meta http-equiv="Content-Style-Type" content="text/css">
+</head>
+<body>
+<?php
+$now_year=date("Y"); //年を取得('2006'など)
+$now_month=date("n"); //月を取得(1～12)
+$now_day=date("j"); //日を取得(1～31)
+$count=date("t"); //今月の日数を取得(28～31)
+$weekday=array("日","月","火","水","木","金","土");
+
+//見出しの出力
+echo "[ ".$now_year."年".$now_month."月のカレンダー]<br>";
+
+for($day=1; $day<=$count; $day++){ //今月の日数分ループ
+
+$w=date("w",mktime(0,0,0,$now_month,$day,$now_year));
+
+switch($w){
+case 0: //日曜日
+	$style="color:#FF0000;";
+	break;
+case 6: //土曜日
+	$style="color:#0000FF;";
+	break;
+default: //月～金曜日
+	$style="color:#666666;";
+}
+
+//本日の日付に背景色追加
+if($day==$now_day){
+$style=$style." background-color:yellow;";
+}
+
+$line=$day."日(".$weekday[$w].")";
+echo '<span style="'.$style.'">'.$line."</span><br>";
+
+}
+?>
+</body>
+</html>
