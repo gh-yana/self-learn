@@ -6,4 +6,5 @@
 - sam_main.py
 
 WebCamで写真を撮って、その写真から物体認識し、SlackにPOSTするサンプル。
+Raspberry Pi 3Bで動かしてます。
 
