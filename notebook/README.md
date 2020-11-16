@@ -7,5 +7,7 @@ List</br>
 <li>Demo5：骨格推定。OpenPose利用。</li>
 <li>Demo6：セグメンテーション。Mask-R-CNN利用。</li>
 <li>Demo7：NLP色々。BERT利用。</li>
+<li>Demo9：AutoMLのPycaret。回帰のサンプル。</li>
+
 
 
