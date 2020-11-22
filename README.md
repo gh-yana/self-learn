@@ -1,21 +1,22 @@
-<img src="https://github.com/gh-yana/self-learn/blob/master/img/mii.png" width="50"/>
-# ug機械学習のサンプル
+<B>動かしながら理解してみる</b><img src="https://github.com/gh-yana/self-learn/blob/master/img/mii.png" width="50"/>
+
+# ML/DLソース置き場
 
 自己学習で使ったソースを取りあえずおいてます。
 
 ## Description
 
-機械学習のサンプルソースを保管（画像分類、重回帰予測、文章分類など、自分で試したサンプル）。
+ML中心のサンプルソースを格納しています。画像分類、回帰、NLPなど。
 
 ## Features
 
-気が向いたら色々勉強して、気が向いたらソースをここにおいていきます。
+気が向いたら勉強して、なんとなく格納しています。
 
 ## Requirement
 
-- Google Colaboratory
+- Google Colaboratory★これ中心
 - Watson Studio
-- Zinrai Deep Learning
+- Zinrai Deep Learning（中身は普通のOSS群＋α？）
 
 ## Usage
 
