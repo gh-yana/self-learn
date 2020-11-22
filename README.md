@@ -14,7 +14,7 @@ ML中心のサンプルソースを格納しています。画像分類、回帰
 
 ## Requirement
 
-- Google Colaboratory★これ中心
+- <a href=https://github.com/gh-yana/self-learn/tree/master/notebook>Google Colaboratory</a>★これ中心
 - Watson Studio
 - Zinrai Deep Learning（中身は普通のOSS群＋α？）
 
