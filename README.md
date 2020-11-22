@@ -1,3 +1,4 @@
+<div align="center"><img src="https://raw.githubusercontent.com/gh-yana/self-learn/img/mii.png" width="400"/></div>
 # 機械学習のサンプル
 
 自己学習で使ったソースを取りあえずおいてます。
