@@ -1,4 +1,4 @@
-# 動かしながら理解してみる<img src="https://github.com/gh-yana/self-learn/blob/master/img/mii.png" width="50"/>
+# <img src="https://github.com/gh-yana/self-learn/blob/master/img/mii.png" width="50"/>動かしながら理解してみる<img src="https://github.com/gh-yana/self-learn/blob/master/img/mii.png" width="50"/>
 
 # ML/DLソース置き場
 
